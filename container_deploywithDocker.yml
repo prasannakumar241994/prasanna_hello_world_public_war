@@ -2,7 +2,7 @@
 - hosts: websever
   tasks:
     - name: login to jfrog
-      shell: docker login -u prasannakumar24 -p prasanna@24 prasannakumar24/praticedeployimage:28 
+      shell: docker login -u prasannakumar24 -p prasanna@24 
     
     - name: pull an image
       shell: docker pull praticedeployimage:28
