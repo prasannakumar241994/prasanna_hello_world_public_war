@@ -1,35 +1,41 @@
 ---
 - hosts: websever
-  vars:
-  - warName: webapp.war
-  - warRemotePath: /home/tomcat
-
+  become: yes
+  become_user: tomcat
   tasks:
-  - name: Download WAR to server
-    command: wget http://git-internal/release.war -O {{ warRemotePath }}/{{ warName }}
-    
-  - name: get current date
-    set_fact: bkpdate="{{ lookup('pipe', 'date +%Y%m%d-%H%M') }}"
+
+  - name: create directory 
+    file:
+      path: /home/tomcat/sourcefile
+      state: directory
+      mode: 0777
+
+  - name: download war file
+    ansible.builtin.get_url:
+      url: https://shstechacademy.jfrog.io/artifactory/testapp/webapp-33.war
+      dest: /home/tomcat/sourcefile/webapp.war
+      username: devops6789@gmail.com
+      password: Siddu@9880
 
   - name: create directory with a date in name
-    file: path="/home/tomcat/{{ bkpdate }}"
-          state=directory
-          mode=0755
+    file: 
+      path: /home/tomcat/backup
+      state: directory
+      mode: 0777
 
-  - name: backup war
-    shell: "cp /usr/local/tomcat/webapps/{{ warName }} /home/tomcat/{{ bkpdate }}/"
-    
-  - name: Unzip WAR file
-    unarchive: src={{ warRemotePath }}/{{ warName }} dest=/usr/local/tomcat/webapps/ROOT/ copy=no mode=0755 owner=tomcat group=tomcat
-    notify:
-        - restart tomcat
-   
+  - name: backup file with owner and permissions
+    copy:
+      src: /opt/tomcat/webapps/webapp.war
+      dest: /home/tomcat/backup/webapp.war
+      remote_src: yes
+
   - name: Delete remote war file
-    file: path={{ warRemotePath }}/{{ warName }} state=absent
-    
-  - name: wait for tomcat to start
-    wait_for: port=8080 timeout=60
-    
-  handlers:
-    - name: Restart tomcat
-      service: name=tomcat state=restarted
+    file:
+      path: /opt/tomcat/webapps/webapp.war
+      state: absent
+
+  - name: deploy file with owner and permissions
+    copy:
+      src: /home/tomcat/sourcefile/webapp.war
+      dest: /opt/tomcat/webapps/webapp.war
+      remote_src: yes
