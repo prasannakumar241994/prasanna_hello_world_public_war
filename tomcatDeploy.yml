@@ -13,20 +13,20 @@
   - name: download war file
     ansible.builtin.get_url:
       url: http://43.206.238.33:8081/artifactory/webapp/#/artifacts/browse/tree/General/libs-snapshot-local/webapp-28.war
-      dest: /home/tomcat/sourcefile/webapp.war
+      dest: /home/ubuntu/sourcefile/webapp.war
       username: admin
       password: prasanna@24
 
   - name: create directory with a date in name
     file: 
-      path: /home/tomcat/backup
+      path: /home/ubuntu/backup
       state: directory
       mode: 0777
 
   - name: backup file with owner and permissions
     copy:
       src: /opt/tomcat/webapps/webapp.war
-      dest: /home/tomcat/backup/webapp.war
+      dest: /home/ubuntu/backup/webapp.war
       remote_src: yes
 
   - name: Delete remote war file
@@ -36,6 +36,6 @@
 
   - name: deploy file with owner and permissions
     copy:
-      src: /home/tomcat/sourcefile/webapp.war
+      src: /home/ubuntu/sourcefile/webapp.war
       dest: /opt/tomcat/webapps/webapp.war
       remote_src: yes
