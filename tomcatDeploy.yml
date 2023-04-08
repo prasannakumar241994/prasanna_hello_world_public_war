@@ -1,7 +1,7 @@
 ---
 - hosts: websever
   become: yes
-  become_user: ubuntu
+  become_user: root
   tasks:
 
   - name: create directory 
@@ -12,10 +12,10 @@
 
   - name: download war file
     ansible.builtin.get_url:
-      url: https://shstechacademy.jfrog.io/artifactory/testapp/webapp-33.war
+      url: http://43.206.238.33:8081/artifactory/webapp/#/artifacts/browse/tree/General/libs-snapshot-local/webapp-28.war
       dest: /home/tomcat/sourcefile/webapp.war
-      username: devops6789@gmail.com
-      password: Siddu@9880
+      username: admin
+      password: prasanna@24
 
   - name: create directory with a date in name
     file: 
