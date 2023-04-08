@@ -1,12 +1,12 @@
 ---
 - hosts: websever
   become: yes
-  become_user: tomcat
+  become_user: ubuntu
   tasks:
 
   - name: create directory 
     file:
-      path: /home/tomcat/sourcefile
+      path: /home/ubuntu/sourcefile
       state: directory
       mode: 0777
 
