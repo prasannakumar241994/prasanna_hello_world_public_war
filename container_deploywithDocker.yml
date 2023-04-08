@@ -2,13 +2,13 @@
 - hosts: websever
   tasks:
     - name: login to jfrog
-      shell: docker login -u prasannakumar24 -p prasanna@24 prasannakumar24/praticedeployimage:28  
+      shell: docker login -u prasannakumar24 -p prasanna@24 praticedeployimage:28  
     
     - name: pull an image
-      shell: docker pull prasannakumar24/praticedeployimage:28
+      shell: docker pull praticedeployimage:28
       
     - name: remove container
       shell: docker rm -f devopsAppDeploy
   
     - name: create a application container
-      shell: docker run -id --name devopsAppDeploy -p 8111:8080 prasannakumar24/praticedeployimage:28
+      shell: docker run -id --name devopsAppDeploy -p 8111:8080 praticedeployimage:28
