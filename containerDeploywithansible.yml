@@ -1,37 +1,16 @@
 ---
 - hosts: websever
   tasks:
-   # - name: Update apt repo and cache on all Debian/Ubuntu boxes
-    #  apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
-     # become: true
-        
-   # - name: Upgrade all apt packages
-     # apt: upgrade=yes force_apt_get=yes
-     # become: true
-        
-  #  - name: Install Python pip
-   #   apt: name={{ item }} update_cache=true state=present force_apt_get=yes
-    #  with_items:
-     #   - python-pip
-      #  - python3-pip
-     # become: true
-        
-   # - name: Install Python packages
-    #  pip: name={{ item }}
-     # with_items:
-      #  - docker
-    #  become: true
 
-      
     - name: Log into DockerHub
       docker_login:
         registry: docker.io
-        username: siddeshg672
-        password: "{{ docker_password }}"
+        username: prasannakumar24
+        password: prasanna@24
         
     - name: pull an image
       docker_image:
-        name: "siddeshg672/devopsapp:test-deploy_{{ BUILD_NUMBER }}"
+        name: "prasannakumar24/praticedeployimage:28"
         source: pull
 
     - name: remove container
@@ -42,7 +21,7 @@
     - name: create a application container
       docker_container:
         name: devopsAppDeploy
-        image: "siddeshg672/devopsapp:test-deploy_{{ BUILD_NUMBER }}"
+        image: "prasannakumar24/praticedeployimage:28"
         state: started
         ports:
           - "8111:8080"
