@@ -32,6 +32,6 @@ spec:
     spec:
       containers:
       - name: devopsapp
-        image: prasannakumar24/praticedeployimage:11
+        image: prasannakumar24/praticedeployimage:10
         ports:
         - containerPort: 80
