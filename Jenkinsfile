@@ -1,25 +1,31 @@
-pipeline{
+pipeline {
     agent { label 'maven'
-          }
-    stages{
-        stage('checkout'){
-           steps{
-               git branch: 'main', url: 'https://github.com/prasannakumar241994/prasanna_hello_world_public_war.git'
-           } 
-        }
-        
-        stage('create binaries'){
-            steps{
-                sh "mvn clean install"
-                }
-        }
-        stage('create docker image'){
-            steps{
-                sh " sudo chmod 666 /var/run/docker.sock "
-                sh "docker build -t prasanna:latest ."
-                sh "docker tag prasanna:latest prasannakumar24/prasanna:test-deploy_${BUILD_NUMBER}"
-                sh "docker push prasannakumar24/prasanna:test-deploy_${BUILD_NUMBER}"
-            }
-        }
     }
+    stages {
+         stage('checkout') {
+             steps {
+                cleanWs()
+              git 'https://github.com/prasannakumar241994/ravdy-hello-world.git'
+             }
+         }
+        stage('compile') {
+            steps {
+                sh 'mvn clean install'
+            }
+       }
+       stage('tomcat image') {
+           steps {
+               sh "docker rmi tomcat:1.0"
+               sh "docker build -t tomcat:1.0 -f Dockerfile ."
+       }
+   }   
+     stage('tomcat container') {
+         steps {
+             sh "sudo chmod 666 /var/run/docker.sock "
+             sh "docker rm tomcat_cont1"
+             sh "docker run -i --name tomcat_cont1 -p 8080:8080 tomcat:1.0"
+             sh "docker ps"
+         }
+     }
+   }
 }
