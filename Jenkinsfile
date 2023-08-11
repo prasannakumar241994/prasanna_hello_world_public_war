@@ -17,7 +17,7 @@ pipeline {
            steps {
                sh "docker stop 6865615e7bda"
                sh "docker rmi tomcat:1.0"
-               sh "docker build -t tomcat:1.0 -f Dockerfile ."
+               sh "docker build -t tomcat:2.0 -f Dockerfile ."
        }
    }   
      stage('tomcat container') {
