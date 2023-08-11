@@ -15,6 +15,7 @@ pipeline{
         }
         stage('create docker image'){
             steps{
+                sh " sudo chmod 666 /var/run/docker.sock "
                 sh "docker build -t prasanna:latest ."
                 sh "docker tag prasanna:latest prasannakumar24/prasanna:test-deploy_${BUILD_NUMBER}"
                 sh "docker push prasannakumar24/prasanna:test-deploy_${BUILD_NUMBER}"
