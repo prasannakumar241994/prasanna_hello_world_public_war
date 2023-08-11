@@ -3,7 +3,7 @@ pipeline{
     stages{
         stage('checkout'){
            steps{
-               git branch: 'main', url: 'https://github.com/Siddeshg672/hello_world_public_war.git'
+               git branch: 'main', url: 'https://github.com/prasannakumar241994/prasanna_hello_world_public_war.git'
            } 
         }
         
@@ -14,9 +14,9 @@ pipeline{
         }
         stage('create docker image'){
             steps{
-                sh "docker build -t siddeshg672/devopsapp:latest ."
-                sh "docker tag siddeshg672/devopsapp:latest siddeshg672/devopsapp:test-deploy_${BUILD_NUMBER}"
-                sh "docker push siddeshg672/devopsapp:test-deploy_${BUILD_NUMBER}"
+                sh "docker build -t prasanna:latest ."
+                sh "docker tag prasanna:latest prasannakumar24/prasanna:test-deploy_${BUILD_NUMBER}"
+                sh "docker push prasannakumar24/prasanna:test-deploy_${BUILD_NUMBER}"
             }
         }
     }
