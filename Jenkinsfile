@@ -15,6 +15,7 @@ pipeline {
        }
        stage('tomcat image') {
            steps {
+               sh "docker stop 6865615e7bda"
                sh "docker rmi tomcat:1.0"
                sh "docker build -t tomcat:1.0 -f Dockerfile ."
        }
